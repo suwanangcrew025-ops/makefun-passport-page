@@ -28,7 +28,11 @@ SS = 2                      # supersampling factor
 W, H = 1024, 727            # final image size (an open passport spread)
 CW, CH = W * SS, H * SS     # canvas size
 
-FONT_DIR = "/usr/share/fonts/truetype/dejavu"
+# Fonts ship inside the repository: the grading sandbox has no system
+# font directory, so load DejaVu from the fonts/ folder beside this file
+# and only fall back to the system path when the bundled copies are gone.
+_BUNDLED_FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
+FONT_DIR = _BUNDLED_FONTS if os.path.isdir(_BUNDLED_FONTS) else "/usr/share/fonts/truetype/dejavu"
 SANS = f"{FONT_DIR}/DejaVuSans.ttf"
 SANSB = f"{FONT_DIR}/DejaVuSans-Bold.ttf"
 SERIFB = f"{FONT_DIR}/DejaVuSerif-Bold.ttf"
